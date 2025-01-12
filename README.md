@@ -1,0 +1,1 @@
+A proof-of-concept deploying a data pipeline with GitHub actions.
