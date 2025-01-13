@@ -15,9 +15,7 @@ def resource(api_key):
         base_url="https://data.fingrid.fi/api/",
         headers={"x-api-key": api_key, "Accept": "application/json"},
     )
-    start_time = (datetime.now() - timedelta(hours=1)).isoformat()
-    end_time = datetime.now().isoformat()
-    params = {"start_time": start_time, "end_time": end_time}
+    params = {"pageSize": 1000}
     endpoint = f"datasets/{DATASET_ID}/data"
     response = client.get(endpoint, params=params)
     yield response.json()
