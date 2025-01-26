@@ -21,29 +21,9 @@ jobs:
         concurrent_skipping: always
         skip_after_successful_duplicate: 'false'
         do_not_skip: '[]'
-  run_pipeline:
+  pipeline:
     needs: maybe_skip
     if: needs.maybe_skip.outputs.should_skip != 'true'
-    runs-on: ubuntu-latest
-    steps:
-    - name: Check out
-      uses: actions/checkout@v3
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.10.x
-    - uses: syphar/restore-virtualenv@v1
-      id: cache-virtualenv
-      with:
-        requirement_files: requirements_github_action.txt
-    - uses: syphar/restore-pip-download-cache@v1
-      if: steps.cache-virtualenv.outputs.cache-hit != 'true'
-    - run: pip install -r requirements_github_action.txt
-      if: steps.cache-virtualenv.outputs.cache-hit != 'true'
-    - name: Run pipeline script
-      run: python 'fingrid_api.py'
-  transform:
-    needs: run_pipeline
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -55,5 +35,7 @@ jobs:
           python-version-file: ".python-version"
       - name: Install dependencies
         run: uv sync
-      - name: Run dbt
+      - name: Extract and load
+        run: uv run python -m fingrid_api
+      - name: Transform
         run: cd dbt && uv run dbt run
