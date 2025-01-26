@@ -5,6 +5,7 @@ import os
 import duckdb
 import streamlit as st
 
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -14,6 +15,17 @@ DATABASE = os.environ.get("DB_NAME")
 con = duckdb.connect(database=f"md:{DATABASE}")
 
 st.title("FinGrid Power Generation")
+query = """
+SELECT inserted_at
+FROM fingrid_api_data._dlt_loads
+ORDER BY inserted_at DESC
+LIMIT 1;
+"""
+last_updated = con.execute(query).fetchone()[0]
+last_updated_minutes_ago = (
+    datetime.now(timezone.utc) - last_updated
+).total_seconds() / 60
+st.text(f"Last updated {last_updated_minutes_ago:.0f} minutes ago.")
 
 # Cumulative megawatts per hour compared to yesterday
 query = """
