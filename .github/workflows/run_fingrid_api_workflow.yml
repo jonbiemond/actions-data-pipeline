@@ -1,4 +1,4 @@
-name: Run fingrid_api pipeline from fingrid_api.py
+name: pipeline
 'on':
   schedule:
   - cron: '*/30 * * * *'
@@ -7,6 +7,8 @@ env:
   DESTINATION__MOTHERDUCK__CREDENTIALS__DATABASE: ${{ secrets.DB_NAME }}
   SOURCES__API_KEY: ${{ secrets.API_KEY }}
   DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD: ${{ secrets.MOTHERDUCK_TOKEN }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
 jobs:
   maybe_skip:
     runs-on: ubuntu-latest
@@ -40,3 +42,18 @@ jobs:
       if: steps.cache-virtualenv.outputs.cache-hit != 'true'
     - name: Run pipeline script
       run: python 'fingrid_api.py'
+  transform:
+    needs: run_pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+      - name: Install dependencies
+        run: uv sync
+      - name: Run dbt
+        run: cd dbt && uv run dbt run

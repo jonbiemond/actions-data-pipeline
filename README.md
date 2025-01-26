@@ -58,3 +58,7 @@ api_key = "env(API_KEY)"
 database = "env(DB_NAME)"
 password = "env(MOTHERDUCK_TOKEN)"
 ```
+
+### Transformation
+
+`dbt` reads the secrets directly from environment variables.
