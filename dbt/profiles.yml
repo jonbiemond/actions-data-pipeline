@@ -1,0 +1,10 @@
+dbt:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "md:{{env_var('DB_NAME')}}?motherduck_token={{env_var('MOTHERDUCK_TOKEN')}}"
+      schema: 'dwh'
+      extensions:
+        - httpfs
+        - parquet

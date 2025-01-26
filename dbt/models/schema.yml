@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: power_generated
+    columns:
+      - name: generated_at
+        description: The timestamp when the power was generated.
+        tests:
+          - unique
+          - not_null
+      - name: generated_date
+        description: The date when the power was generated in CET.
+        tests:
+          - not_null
+      - name: generated_time
+        description: The time when the power was generated in CET.
+        tests:
+          - not_null
+      - name: megawatts
+        tests:
+          - not_null
