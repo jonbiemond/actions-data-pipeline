@@ -17,5 +17,10 @@ models:
         tests:
           - not_null
       - name: megawatts
+        description: Average megawatt generation.
+        tests:
+          - not_null
+      - name: megawatt_hours
+        description: Megawatt hours generated.
         tests:
           - not_null

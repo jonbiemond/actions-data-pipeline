@@ -22,15 +22,19 @@ WITH raw AS (
   LEFT JOIN upsampled d ON g.quarter_hour <= d.generated_minute AND g.quarter_hour + INTERVAL '15 minutes' > d.generated_minute 
   GROUP BY g.quarter_hour
 )
-, modeled AS (
+, filled AS (
   SELECT
     generated_at,
-    date_trunc('day', generated_at AT TIME ZONE 'Europe/Helsinki') AS generated_date,
-    (generated_at AT TIME ZONE 'Europe/Helsinki')::time AS generated_time,
     first_value(megawatts) OVER (PARTITION BY grp_megawatts) AS megawatts
   FROM (
     SELECT *, sum(CASE WHEN megawatts IS NOT NULL THEN 1 END) OVER (ORDER BY generated_at) AS grp_megawatts
     FROM downsampled
   )
 )
-SELECT * FROM modeled
+SELECT
+  generated_at,
+  date_trunc('day', generated_at AT TIME ZONE 'Europe/Helsinki') AS generated_date,
+  (generated_at AT TIME ZONE 'Europe/Helsinki')::time AS generated_time,
+  megawatts,
+  megawatts * 0.25 AS megawatt_hours
+FROM filled
