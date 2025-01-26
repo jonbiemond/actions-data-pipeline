@@ -2,7 +2,6 @@ from typing import Any
 
 import dlt
 from dlt.sources.helpers.rest_client import RESTClient
-from datetime import datetime, timedelta
 
 
 # wind dataset
