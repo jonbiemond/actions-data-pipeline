@@ -8,4 +8,6 @@ dependencies = [
     "dbt-core>=1.9.1",
     "dbt-duckdb>=1.9.1",
     "dlt[motherduck]>=1.5.0",
+    "python-dotenv>=1.0.1",
+    "streamlit>=1.41.1",
 ]

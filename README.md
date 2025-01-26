@@ -4,6 +4,7 @@ A proof-of-concept deploying a data pipeline with GitHub actions.
 * Extract: [dlt](https://dlthub.com/)
 * Transform & Load: [dbt](https://www.getdbt.com/)
 * Warehouse: [MotherDuck](https://www.getdbt.com/)
+* Visualize: [Streamlit](https://streamlit.io/)
 
 ## Prerequisites
 
