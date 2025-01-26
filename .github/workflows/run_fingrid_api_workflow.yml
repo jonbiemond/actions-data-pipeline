@@ -4,9 +4,9 @@ name: Run fingrid_api pipeline from fingrid_api.py
   - cron: '*/30 * * * *'
   workflow_dispatch: null
 env:
-  DESTINATION__MOTHERDUCK__CREDENTIALS__DATABASE: actions_poc
-  SOURCES__API_KEY: ${{ secrets.SOURCES__API_KEY }}
-  DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD: ${{ secrets.DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD }}
+  DESTINATION__MOTHERDUCK__CREDENTIALS__DATABASE: ${{ secrets.DB_NAME }}
+  SOURCES__API_KEY: ${{ secrets.API_KEY }}
+  DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD: ${{ secrets.MOTHERDUCK_TOKEN }}
 jobs:
   maybe_skip:
     runs-on: ubuntu-latest

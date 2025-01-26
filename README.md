@@ -9,6 +9,7 @@ A proof-of-concept deploying a data pipeline with GitHub actions.
 
 * [Fingrid Data API key](https://data.fingrid.fi/en/instructions)
 * [MotherDuck access token](https://motherduck.com/docs/key-tasks/authenticating-and-connecting-to-motherduck/authenticating-to-motherduck/#authentication-using-an-access-token)
+* MotherDuck database
 
 ## Deployment
 
@@ -20,8 +21,9 @@ Create a fork of this repo to deploy.
 The data is extracted from Fingrid using dlt.
 dlt provides [step-by-step instructions](https://dlthub.com/docs/walkthroughs/deploy-a-pipeline/deploy-with-github-actions).
 Add the following secret values (typically stored in ./.dlt/secrets.toml):
-- SOURCES__API_KEY
-- DESTINATION__MOTHERDUCK__CREDENTIALS__PASSWORD
+- DB_NAME
+- API_KEY
+- MOTHERDUCK_TOKEN
 
 in https://github.com/jonbiemond/actions-data-pipeline/settings/secrets/actions
 
