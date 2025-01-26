@@ -33,6 +33,16 @@ To run and develop the code locally, install dependencies with [`uv`](https://do
 uv sync
 ```
 
+### Secrets
+
+All the secrets and necessary variables are read from environment variables.
+Set the following, or use a tool like [mise-en-place](https://mise.jdx.dev/).
+```
+API_KEY=<your_api_key>
+DB_NAME=<your_db_name>
+MOTHERDUCK_TOKEN=<your_motherduck_token>
+```
+
 ### Extraction
 
 `dlt` reads the secrets from `.dlt/secrets.toml`
@@ -40,9 +50,9 @@ uv sync
 ```toml
 # .dlt/secrets.toml
 [sources]
-api_key = "<api_key>"
+api_key = "env(API_KEY)"
 
 [destination.motherduck.credentials]
-database = "<db_name>"
-password = "<access_token>"
+database = "env(DB_NAME)"
+password = "env(MOTHERDUCK_TOKEN)"
 ```
